@@ -1,27 +1,8 @@
 let mapleader=' '
 
-filetype plugin indent on   " load filetype-specific indent files
-syntax enable        " enable syntax processing
+filetype plugin indent on
+syntax enable
 colorscheme ron
-
-set tabstop=4        " number of visual spaces per TAB
-set softtabstop=4    " number of spaces in tab when editing
-set shiftwidth=4
-set expandtab
-
-set number           " show line numbers
-set relativenumber
-set showcmd          " show command in bottom bar
-set wildmenu         " show wildcard matching in menu
-
-set showmatch        " highlight matching [{()}]
-
-set incsearch        " search as characters are entered
-set hlsearch         " highlight matches
-
-" Change the cursor
-let &t_SI.="\e[5 q" "SI = INSERT mode
-let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
 
 " netrw file-tree view
 let g:netrw_liststyle=3
@@ -29,6 +10,29 @@ let g:netrw_banner=0
 let g:netrw_winsize=-40
 nnoremap <leader>t :Lexplore<cr>
 nnoremap <leader>ct :execute ':Lexplore ' . expand('%:p:h')<cr>
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+
+set number
+set relativenumber
+
+set showcmd
+set showmatch
+
+set incsearch
+set hlsearch
+
+" change the cursor
+let &t_SI.="\e[5 q" "SI = INSERT mode
+let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
+
+" set completion options
+set wildmenu
+set complete-=i
+set completeopt=menuone,longest,noselect
 
 set path=,,**
 
@@ -49,5 +53,32 @@ if executable('git')
     nnoremap <leader>glp :execute '!git -C ' . expand('%:p:h') . ' log --patch --stat ' . expand('%:p')<cr>
 endif
 
+" set the statusline
 set laststatus=2
-set statusline=%3.n\.\ %.60t\ \[%Y\]\[%{&fileformat}\]\[%{&fileencoding}\]%m%r%=%l\/%L\ %P,\ %3.c\ 
+if executable('git')
+    let b:git_info = ['', '', '']
+    function! GetGitInfo() abort
+        let git_prefix = 'git -C ' . expand('%:p:h')
+        if system(git_prefix . ' rev-parse --is-inside-work-tree') =~ 'true'
+            let repo_name = matchstr(system(git_prefix . ' rev-parse --show-toplevel'), '\v\/\zs[^\/\n]+\ze[ \n]*$')
+            let branch_name = matchstr(system(git_prefix . ' rev-parse --abbrev-ref HEAD'), '\v^[^\n]+\ze')
+            let git_repo_and_branch = repo_name . ' (' . branch_name . ')'
+            let diff_numstat = system(git_prefix . ' diff --numstat ' . expand('%:p'))
+            let added_lines = matchstr(diff_numstat, '\v^[ ]*\zs[0-9]+\ze')
+            let deleted_lines = matchstr(diff_numstat, '\v^[ \t]*[0-9]+[ \t]+\zs[0-9]+\ze')
+            return [git_repo_and_branch, '+' . added_lines . ' ', '-' . deleted_lines]
+        else
+            return ['not a git repo', '+ ', '-']
+        endif
+    endfunction
+    augroup gitinfo
+        au!
+        au BufReadPost,BufWritePost * let b:git_info = GetGitInfo()
+    augroup END
+    set statusline=%3.n\.\ %.60t%m%r
+    set statusline+=\ \|\ %{get(get(b:,'git_info',[]),0,'')}
+    set statusline+=\ \|\ %{get(get(b:,'git_info',[]),1,'')}%{get(get(b:,'git_info',[]),2,'')}
+    set statusline+=\ \|\ %Y\ \|\ %{&fileformat}\ \|\ %{&fileencoding}\ \|\ %=%l\/%L\ %P,\ %3.c\ 
+else
+    set statusline=%3.n\.\ %.60t%m%r\ \[%Y\]\[%{&fileformat}\]\[%{&fileencoding}\]%=%l\/%L\ %P,\ %3.c\ 
+endif
