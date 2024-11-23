@@ -36,11 +36,18 @@ set completeopt=menuone,longest,noselect
 
 set path=,,**
 
+if !executable('rg')
+    set grepprg=rg\ --vimgrep\ --smart-case
+else
+    set grepprg=grep\ -EHnr
+endif
+
 nnoremap <space>w <c-w>
 nnoremap <leader>b :ls<cr>:buffer<space>
 nnoremap <leader>f :find<space>
 nnoremap <leader>j :jumps<cr>
 nnoremap <leader>m :marks abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<cr>:normal! `
+nnoremap <leader>/ :grep<space>
 nnoremap <leader>cc :e ~/.vimrc<cr>
 nnoremap <leader>cr :w<cr>:source %<cr>
 
