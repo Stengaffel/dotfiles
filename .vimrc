@@ -72,7 +72,7 @@ inoremap kl <Esc>
 if executable('git')
     nnoremap <leader>gd :execute '!git -C ' . expand('%:p:h') . ' diff ' . expand('%:p')<cr>
     nnoremap <leader>gl :execute '!git -C ' . expand('%:p:h') . ' log --stat ' . expand('%:p')<cr>
-    nnoremap <leader>glp :execute '!git -C ' . expand('%:p:h') . ' log --patch --stat ' . expand('%:p')<cr>
+    nnoremap <leader>gp :execute '!git -C ' . expand('%:p:h') . ' log --patch --stat ' . expand('%:p')<cr>
 endif
 
 set laststatus=2
