@@ -51,7 +51,7 @@ set completeopt=menuone,longest,noselect
 
 set path=,,**
 
-if !executable('rg')
+if executable('rg')
     set grepprg=rg\ --vimgrep\ --smart-case
 else
     set grepprg=grep\ -EHnr
@@ -75,7 +75,6 @@ if executable('git')
     nnoremap <leader>glp :execute '!git -C ' . expand('%:p:h') . ' log --patch --stat ' . expand('%:p')<cr>
 endif
 
-" set the statusline
 set laststatus=2
 if executable('git')
     let b:git_info = ['', '', '']
@@ -97,10 +96,26 @@ if executable('git')
         au!
         au BufReadPost,BufWritePost * let b:git_info = GetGitInfo()
     augroup END
-    set statusline=%3.n\.\ %.60t%m%r
-    set statusline+=\ \|\ %{get(get(b:,'git_info',[]),0,'')}
-    set statusline+=\ \|\ %{get(get(b:,'git_info',[]),1,'')}%{get(get(b:,'git_info',[]),2,'')}
-    set statusline+=\ \|\ %Y\ \|\ %{&fileformat}\ \|\ %{&fileencoding}\ \|\ %=%l\/%L\ %P,\ %3.c\ 
+    if !hlexists('HLStatusLineNormal')
+        hi HLStatusLineNormal    guifg=black guibg=white ctermfg=black ctermbg=white
+        hi HLStatusLineMod       guifg=black guibg=white ctermfg=black ctermbg=white
+        hi HLStatusLineReadOnly  guifg=black guibg=white ctermfg=black ctermbg=white
+        hi HLStatusLineEdge      guifg=black guibg=white ctermfg=black ctermbg=white
+        hi HLStatusLineGitBranch guifg=black guibg=white ctermfg=black ctermbg=white
+        hi HLStatusLineGitAdd    guifg=black guibg=white ctermfg=black ctermbg=white
+        hi HLStatusLineGitDel    guifg=black guibg=white ctermfg=black ctermbg=white
+    endif
+    set statusline=%#HLStatusLineEdge#\ \ %n\ \ 
+    set statusline+=%#HLStatusLineNormal#\ %.60t
+    set statusline+=%#HLStatusLineMod#%m
+    set statusline+=%#HLStatusLineReadOnly#%r
+    set statusline+=%#HLStatusLineNormal#\ \|\ 
+    set statusline+=%#HLStatusLineGitBranch#%{get(get(b:,'git_info',[]),0,'')}
+    set statusline+=%#HLStatusLineNormal#\ \|\ 
+    set statusline+=%#HLStatusLineGitAdd#%{get(get(b:,'git_info',[]),1,'')}
+    set statusline+=%#HLStatusLineGitDel#%{get(get(b:,'git_info',[]),2,'')}
+    set statusline+=%#HLStatusLineNormal#\ \|\ %Y\ \|\ %{&fileformat}\ \|\ %{&fileencoding}\ \|\ %=
+    set statusline+=%#HLStatusLineEdge#\ \ %5.l\/%L\ %P,\ %3.c\ 
 else
     set statusline=%3.n\.\ %.60t%m%r\ \[%Y\]\[%{&fileformat}\]\[%{&fileencoding}\]%=%l\/%L\ %P,\ %3.c\ 
 endif

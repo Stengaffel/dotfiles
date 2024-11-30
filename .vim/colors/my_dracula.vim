@@ -57,4 +57,12 @@ hi DiffAdd      guifg=black guibg=#50fa7b
 hi DiffDelete   guifg=black guibg=#ff5555
 hi DiffChange   guifg=black guibg=#ffb86c
 hi DiffText     guifg=black guibg=#f1fa8c
+
+hi HLStatusLineNormal    guifg=white guibg=#44475a
+hi HLStatusLineMod       guifg=#ff5555 guibg=#44475a
+hi HLStatusLineReadOnly  guifg=#8be9fd guibg=#44475a
+hi HLStatusLineEdge      guifg=white guibg=#6272a4
+hi HLStatusLineGitBranch guifg=#f1fa8c guibg=#44475a
+hi HLStatusLineGitAdd    guifg=#50fa7b guibg=#44475a
+hi HLStatusLineGitDel    guifg=#ff5555 guibg=#44475a
 " ======================================================
