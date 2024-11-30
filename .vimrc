@@ -1,8 +1,23 @@
 let mapleader=' '
 
+if has("gui_running")
+    set termguicolors
+    colorscheme shine
+    set guioptions-=m
+    set guioptions-=r
+    set guioptions-=T
+    set guifont=Consolas:h12
+else
+    if has("termguicolors")
+        set termguicolors
+        colorscheme my_dracula
+    else
+        colorscheme ron
+    endif
+endif
+
 filetype plugin indent on
 syntax enable
-colorscheme ron
 
 " netrw file-tree view
 let g:netrw_liststyle=3
@@ -88,4 +103,21 @@ if executable('git')
     set statusline+=\ \|\ %Y\ \|\ %{&fileformat}\ \|\ %{&fileencoding}\ \|\ %=%l\/%L\ %P,\ %3.c\ 
 else
     set statusline=%3.n\.\ %.60t%m%r\ \[%Y\]\[%{&fileformat}\]\[%{&fileencoding}\]%=%l\/%L\ %P,\ %3.c\ 
+endif
+
+if has("gui_running")
+    function! ChangeFontSize(operation) abort
+        let font = matchstr(&guifont, '\v^\zs[^:]+\ze')
+        let font_size = matchstr(&guifont, '\v^[^:]+:h\zs[0-9]+\ze')
+        let new_font_size = -1
+        if a:operation == 'inc'
+            let new_font_size = (str2nr(font_size, 10) + 2)
+        else
+            let new_font_size = (str2nr(font_size, 10) - 2)
+        endif
+        execute 'set guifont=' . font . ':h' . new_font_size
+    endfunction
+    nnoremap <C-+> :call ChangeFontSize('inc')<cr>
+    nnoremap <C--> :call ChangeFontSize('dec')<cr>
+    set laststatus=0
 endif
