@@ -6,7 +6,9 @@ if has("gui_running")
     set guioptions-=m
     set guioptions-=r
     set guioptions-=T
+    set guioptions-=L
     set guifont=Consolas:h12
+    set belloff=all
 else
     if has("termguicolors")
         set termguicolors
