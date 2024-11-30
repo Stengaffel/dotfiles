@@ -42,6 +42,8 @@ set showmatch
 set incsearch
 set hlsearch
 
+set backspace=indent,eol,start
+
 " change the cursor
 let &t_SI.="\e[5 q" "SI = INSERT mode
 let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
@@ -50,6 +52,12 @@ let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
 set wildmenu
 set complete-=i
 set completeopt=menuone,longest,noselect
+inoremap n <C-n>
+inoremap p <C-p>
+inoremap k <C-x><C-k>
+inoremap t <C-x><C-t>
+inoremap f <C-x><C-f>
+inoremap l <C-x><C-l>
 
 set path=,,**
 
