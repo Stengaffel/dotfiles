@@ -43,6 +43,7 @@ set incsearch
 set hlsearch
 
 set backspace=indent,eol,start
+set scrolloff=3
 
 " change the cursor
 let &t_SI.="\e[5 q" "SI = INSERT mode
@@ -58,6 +59,7 @@ inoremap k <C-x><C-k>
 inoremap t <C-x><C-t>
 inoremap f <C-x><C-f>
 inoremap l <C-x><C-l>
+inoremap v <C-x><C-v>
 
 set path=,,**
 
