@@ -1,4 +1,4 @@
-PS1='\e[32m\u\e[m@\e[34m\h\e[m[\A]\e[36m[\w]\e[m$ '
+PS1='\[\e[32m\]\u\[\e[m\]@\[\e[34m\]\h\[\e[m\][\A]\[\e[36m\][\w]\[\e[m\]$ '
 PROMPT_DIRTRIM=2
 
 alias gs='git status'
