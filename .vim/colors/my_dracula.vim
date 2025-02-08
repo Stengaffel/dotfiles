@@ -24,7 +24,7 @@ let g:colors_name = "my_dracula"
 " red '#ff5555'
 " yellow '#f1fa8c'
 
-hi Normal       guibg=NONE ctermbg=NONE
+hi Normal       guifg=NONE guibg=NONE ctermfg=NONE ctermbg=NONE
 hi Directory    guifg=#8be9fd ctermbg=NONE
 hi LineNrAbove  guifg=NONE ctermfg=grey
 hi LineNr       guifg=#f1fa8c ctermfg=yellow
@@ -43,7 +43,7 @@ hi Todo         guifg=NONE guibg=NONE ctermfg=black ctermbg=yellow
 hi WildMenu     guifg=black guibg=#bd93f9
 hi TabLineFill  guifg=#44475a guibg=white
 hi TabLine      guifg=white guibg=#44475a
-hi VertSplit    guifg=#f8f8f2 guibg=NONE
+hi VertSplit    guifg=#282a36 guibg=white ctermfg=NONE ctermbg=NONE
 hi Title        guifg=#f8f8f2 guibg=NONE
 hi Visual       term=reverse
 hi Folded       guifg=#8be9fd guibg=gray30
