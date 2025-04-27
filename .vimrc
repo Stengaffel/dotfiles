@@ -117,7 +117,8 @@ if executable('git')
         hi HLStatusLineGitAdd    guifg=black guibg=white ctermfg=black ctermbg=white
         hi HLStatusLineGitDel    guifg=black guibg=white ctermfg=black ctermbg=white
     endif
-    set statusline=%#HLStatusLineNormal#\ %.60t
+    set statusline=%#HLStatusLineEdge#\ \ %n\ \ 
+    set statusline+=%#HLStatusLineNormal#\ %.60t
     set statusline+=%#HLStatusLineMod#%m
     set statusline+=%#HLStatusLineReadOnly#%r
     set statusline+=%#HLStatusLineNormal#\ \|\ 
